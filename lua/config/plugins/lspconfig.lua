@@ -133,6 +133,13 @@ return {
 		--  - settings (table): Override the default settings passed when initializing the server.
 		--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 		require("lspconfig").gleam.setup({})
+		require("lspconfig").clangd.setup({
+			cmd = {
+				"clangd",
+				"--header-insertion=never",
+				"--completion-style=detailed",
+			},
+		})
 		local servers = {
 			zls = {
 				settings = {
