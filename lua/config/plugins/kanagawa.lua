@@ -1,10 +1,8 @@
 return {
-	"wincent/base16-nvim",
-	lazy = false, -- load at start
-	priority = 1000, -- load at start
-
+	"rebelot/kanagawa.nvim",
+	lazy = false,
 	config = function()
-		vim.cmd([[colorscheme gruvbox-dark-hard]])
+		vim.cmd("colorscheme kanagawa-wave")
 		vim.o.background = "dark"
 
 		local bools = vim.api.nvim_get_hl(0, { name = "Boolean" })
