@@ -118,6 +118,11 @@ return {
 		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		require("cmp").setup({
+			sources = {
+				{ name = "copilot" },
+				{ name = "nvim_lsp" },
+				{ name = "luasnip" },
+			},
 			experimental = {
 				ghost_text = true,
 			},
