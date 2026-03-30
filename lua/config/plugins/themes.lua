@@ -1,16 +1,5 @@
--- return {
--- 	"rebelot/kanagawa.nvim",
---
--- 	config = function()
--- 		vim.cmd("colorscheme kanagawa")
--- 	end,
--- }
-return {
-	-- "ellisonleao/gruvbox.nvim",
-	-- priority = 1000,
-	-- config = function()
-	-- 	vim.o.background = "dark"
-	-- 	vim.cmd([[colorscheme gruvbox]])
-	-- end,
-	-- opts = ...,
-}
+vim.pack.add({
+  { src = "https://github.com/rebelot/kanagawa.nvim" },
+})
+
+require("kanagawa").setup()

@@ -31,3 +31,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.hl.on_yank({ higroup = "IncSearch", timeout = 100 })
 	end,
 })
+
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+  virtual_text = true, -- show inline diagnostics
+})
