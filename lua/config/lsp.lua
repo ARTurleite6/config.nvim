@@ -15,6 +15,7 @@ local lsp_servers = {
 		Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) } },
 	},
 	clangd = {},
+	rust_analyzer = {},
   ols = {
     cmd = {"ols"}
   }
@@ -35,3 +36,36 @@ for server, config in pairs(lsp_servers) do
 		end,
 	})
 end
+
+-- format on save
+local format_group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = format_group,
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if not client or not client:supports_method("textDocument/formatting") then
+			return
+		end
+
+		vim.api.nvim_clear_autocmds({ group = format_group, buffer = args.buf })
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = format_group,
+			buffer = args.buf,
+			callback = function()
+				if vim.g.disable_autoformat or vim.b[args.buf].disable_autoformat then
+					return
+				end
+				vim.lsp.buf.format({ bufnr = args.buf, timeout_ms = 1000 })
+			end,
+		})
+	end,
+})
+
+vim.api.nvim_create_user_command("FormatToggle", function(opts)
+	if opts.bang then
+		vim.b.disable_autoformat = not vim.b.disable_autoformat
+	else
+		vim.g.disable_autoformat = not vim.g.disable_autoformat
+	end
+end, { bang = true, desc = "Toggle format on save (! = buffer only)" })
